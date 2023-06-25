@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+       <style name="ModernText"><item name="android:textColor">#FFFFFF</item> <!-- white color -->
+        <item name="android:fontFamily">helvetica</item> <!-- modern font -->
+        <item name="android:textSize">18sp</item> <!-- adjust size as needed --></style>
+</resources>
