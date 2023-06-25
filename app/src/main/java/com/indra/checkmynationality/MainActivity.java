@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        txtview=findViewById(R.id.textView2);
+        percentage=findViewById(R.id.textView3);
+        editTxt=findViewById(R.id.editText);
+        warning=findViewById(R.id.warning);
+        refreshButton=findViewById(R.id.refresh);
 
     }
     Locale locale;
@@ -37,12 +45,10 @@ public class MainActivity extends AppCompatActivity {
     public EditText editTxt;
     public CountryMap cMap;
     public TextView warning;
+    public Button refreshButton;
     
     void init(){
-        txtview=findViewById(R.id.textView2);
-        percentage=findViewById(R.id.textView3);
-        editTxt=findViewById(R.id.editText);
-        warning=findViewById(R.id.warning);
+
         cMap=new CountryMap();
         cMap.setCountryCodes();
     }
@@ -51,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String token=editTxt.getText().toString();
-        if(token.contains("")){
+        if(token.isEmpty()){
             warning.setText("Please do not provide empty name");
             return;
 
@@ -76,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(locale.getDisplayCountry()+" "+probability);
                     txtview.setText("Origin Country is "+locale.getDisplayCountry());
                     percentage.setText(probability+"%");
+                    warning.setText("");
                 }
                 else{
                     txtview.setText("We cannot predict nationality. Please enter correct name");
@@ -102,5 +109,15 @@ public class MainActivity extends AppCompatActivity {
         init();
         callAPI();
 
+    }
+
+    public void onClickRefresh(View view) {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_animation);
+        view.startAnimation(animation);
+        if(null!=percentage )
+        percentage.setText("");
+        txtview.setText("");
+        warning.setText("");
+        editTxt.setText("");
     }
 }
