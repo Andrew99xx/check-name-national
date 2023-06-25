@@ -2,10 +2,12 @@ package com.indra.checkmynationality;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -107,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkNational(View view) {
         init();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         callAPI();
 
     }
@@ -114,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
     public void onClickRefresh(View view) {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_animation);
         view.startAnimation(animation);
-        if(null!=percentage )
         percentage.setText("");
         txtview.setText("");
         warning.setText("");

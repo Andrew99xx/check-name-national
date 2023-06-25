@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <EditText
 
@@ -47,28 +47,28 @@
         android:id="@+id/button"
         android:layout_width="143dp"
         android:layout_height="73dp"
-        android:layout_marginBottom="88dp"
         android:backgroundTint="#026875"
         android:onClick="checkNational"
         android:text="Click Me!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.029" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
         android:gravity="center"
         android:textSize="48dp"
         android:theme="@style/ModernText"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.255" />
 
     <TextView
         android:id="@+id/textView3"
@@ -77,37 +77,40 @@
         android:gravity="center"
         android:textSize="40dp"
         android:theme="@style/ModernText"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/warning"
+        app:layout_constraintVertical_bias="0.504" />
 
     <TextView
         android:id="@+id/warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FF0000"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.603" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.028" />
 
     <Button
         android:id="@+id/refresh"
-        android:onClick="onClickRefresh"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/rounded_button"
+        android:onClick="onClickRefresh"
         android:text="↺"
-        android:textSize="23dp"
+        android:textSize="35dp"
+        android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.903"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923" />
+        app:layout_constraintVertical_bias="0.078" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
