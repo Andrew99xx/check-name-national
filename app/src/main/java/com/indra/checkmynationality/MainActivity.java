@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,14 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.mikephil.charting.charts.BarChart;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,32 +38,36 @@ public class MainActivity extends AppCompatActivity {
         editTxt=findViewById(R.id.editText);
         warning=findViewById(R.id.warning);
         refreshButton=findViewById(R.id.refresh);
+        cMap=new CountryMap();
+        cMap.setCountryCodes();
 
     }
     Locale locale;
-    public TextView txtview;
-    public TextView percentage;
-    public EditText editTxt;
-    public CountryMap cMap;
-    public TextView warning;
-    public Button refreshButton;
+    private View loadingLayout;
+    private TextView txtview;
+    private TextView percentage;
+    private EditText editTxt;
+    private CountryMap cMap;
+    private TextView warning;
+    private ImageButton refreshButton;
     
-    void init(){
 
-        cMap=new CountryMap();
-        cMap.setCountryCodes();
-    }
     public void callAPI() {
+        showLoadingLayout();
 
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String token=editTxt.getText().toString();
+        cleanAll();
         if(token.isEmpty()){
+
             warning.setText("Please do not provide empty name");
+            hideLoadingLayout();
             return;
 
         } else if (token.contains(" ")) {
             warning.setText(("Please do not provide space in name"));
+            hideLoadingLayout();
             return;
 
         }
@@ -84,11 +87,12 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(locale.getDisplayCountry()+" "+probability);
                     txtview.setText("Origin Country is "+locale.getDisplayCountry());
                     percentage.setText(probability+"%");
-                    warning.setText("");
+
                 }
                 else{
                     txtview.setText("We cannot predict nationality. Please enter correct name");
                 }
+                hideLoadingLayout();
 
                 //setValues(country, probability);
             }
@@ -96,19 +100,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 txtview.setText("We cannot predict nationality. Please enter correct name");
+                hideLoadingLayout();
+
             }
+
         });
         requestQueue.add(request);
 
-    }
-
-    private void setValues(String country, int probability) {
-
 
     }
+
+    public void cleanAll(){
+        percentage.setText("");
+        txtview.setText("");
+        warning.setText("");
+        editTxt.setText("");
+
+    }
+
+    private void hideLoadingLayout() {
+        ViewGroup rootView = findViewById(android.R.id.content);
+        rootView.removeView(loadingLayout);
+    }
+
+    private void showLoadingLayout() {
+        // Check if the loading layout is already inflated
+        if (loadingLayout == null) {
+            LayoutInflater inflater = LayoutInflater.from(this);
+            loadingLayout = inflater.inflate(R.layout.layout_loading, null);
+        }
+
+        // Add the loading layout to the root view
+        ViewGroup rootView = findViewById(android.R.id.content);
+        rootView.addView(loadingLayout);
+    }
+
 
     public void checkNational(View view) {
-        init();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         callAPI();
@@ -118,9 +146,6 @@ public class MainActivity extends AppCompatActivity {
     public void onClickRefresh(View view) {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_animation);
         view.startAnimation(animation);
-        percentage.setText("");
-        txtview.setText("");
-        warning.setText("");
-        editTxt.setText("");
+        cleanAll();
     }
 }
