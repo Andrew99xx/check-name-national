@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(response.toString());
                 Gson gson= new Gson();
                 Root root= gson.fromJson(response.toString(),Root.class);
-                if(null!=root) {
+                if(root==null) {
                     countryNo = root.getCountry().get(0).getCountry_id();
                     locale=new Locale("", countryNo);
                     int probability=(int)(root.getCountry().get(0).getProbability()*100);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     hideLoadingLayout();
 
                 }
-                else if(root==null){
+                else {
                     txtview.setText("We cannot predict nationality. Please enter correct name");
                     hideLoadingLayout();
                 }
